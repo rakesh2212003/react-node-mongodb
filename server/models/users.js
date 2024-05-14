@@ -5,6 +5,7 @@ const userSchema = mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     created_on: { type: Date, default: Date.now },
+    updated_on: { type: Date, default: Date.now },
     deleted: { type: Number, default: 0}
 })
 

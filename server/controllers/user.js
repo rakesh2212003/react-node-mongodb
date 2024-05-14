@@ -24,6 +24,7 @@ export const updateUser = async (req, res) => {
                 'name': name,
                 'email': email,
                 'password': hashedPassword,
+                'updated_on': Date.now()
             },
             $inc: {
                 '__v': 1
