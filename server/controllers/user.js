@@ -12,7 +12,7 @@ export const updateUser = async (req, res) => {
     }
 
     try {
-        const user = await users.findById(_id);
+        const user = await users.findOne({ _id, deleted: 0 });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -44,7 +44,7 @@ export const deleteUser = async (req, res) => {
     }
 
     try {
-        const user = await users.findById(_id);
+        const user = await users.findOne({ _id, deleted: 0 });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
