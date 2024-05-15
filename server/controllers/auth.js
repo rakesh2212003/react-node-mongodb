@@ -13,8 +13,12 @@ export const signup = async(req,res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await users.create({ firstname, lastname, email, password: hashedPassword })
-        const token = jwt.sign({ email: newUser.email, id:newUser._id }, process.env.JWT_SECRET, {expiresIn: '1h'});
-        return res.status(200).json({ data: newUser, token, message: 'User created successfully' });
+        const token = jwt.sign({ id:newUser._id }, process.env.JWT_SECRET, {expiresIn: '1h'});
+        return res.status(200).json({
+            token,
+            data: newUser,
+            message: 'User created successfully'
+        });
     }catch(error){
         return res.status(500).json({ error: 'Internal server error'});
     }
@@ -33,7 +37,11 @@ export const login = async (req, res) => {
             return res.status(400).json({error : 'Invalid email or password' })
         }
         const token = jwt.sign({ email: existinguser.email, id:existinguser._id}, process.env.JWT_SECRET, { expiresIn: '1h'});
-        return res.status(200).json({ data: existinguser, token, message: 'User login successfully' })
+        return res.status(200).json({ 
+            token,
+            data: existinguser,
+            message: 'User login successfully'
+        })
     } catch (error)  {
         return res.status(500).json({ error: 'Internal server error'})
     }

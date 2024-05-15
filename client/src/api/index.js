@@ -9,5 +9,5 @@ const API = axios.create({ baseURL: 'http://localhost:8000' })
 //     return req;
 // })
 
-export const SIGNUP = async(data) =>  API.post('/user/signup', data);
+export const SIGNUP = (data) => API.post('/user/signup', data);
 export const LOGIN = async(data) => API.post('/user/login', data);

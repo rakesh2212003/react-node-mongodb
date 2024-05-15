@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Input, Button } from '../components'
 import { setUser } from '../context/actions/user'
-import * as api from '../api'
+import { SIGNUP, LOGIN } from '../api'
 
 const Auth = () => {
+    const user = useSelector(state => state.user);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -18,6 +19,12 @@ const Auth = () => {
     const [password, setPassword] = useState('');
     const [cpassword, setCpassword] = useState('');
 
+    useEffect(() => {
+        if(user){
+            navigate('/', {replace: true})
+        }
+    }, [navigate, user])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignup) {
@@ -25,12 +32,14 @@ const Auth = () => {
                 alert('Password not match');
                 return;
             }
-            api.SIGNUP({firstname,lastname,email,password}).then((user) => {
+            SIGNUP({firstname,lastname,email,password})
+            .then((user) => {
                 dispatch(setUser(user.data));
                 navigate('/', {replace: true})
             })
         } else {
-            api.LOGIN({ email,password }).then((user) => {
+            LOGIN({ email,password })
+            .then((user) => {
                 dispatch(setUser(user.data));
                 navigate('/' ,{replace: true});
             })
@@ -116,6 +125,7 @@ const Auth = () => {
                     }
                 </span>
             </p>
+            <Link to='/'>Home</Link>
         </div>
     )
 }

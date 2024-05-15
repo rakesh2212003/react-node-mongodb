@@ -3,9 +3,9 @@ import AllRoutes from './AllRoutes'
 
 const App = () => {
     return (
-        <>
+        // <>
             <AllRoutes />
-        </>
+        // </>
     )
 }
 
