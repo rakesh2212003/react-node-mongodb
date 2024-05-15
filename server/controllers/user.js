@@ -8,7 +8,7 @@ export const updateUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(404).json({ error: 'Invalid ObjectId' });
+        return res.status(404).json({ error: 'Invalid user id' });
     }
 
     try {
@@ -40,7 +40,7 @@ export const deleteUser = async (req, res) => {
     const { id: _id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(404).json({ error: 'Invalid ObjectId' });
+        return res.status(404).json({ error: 'Invalid id' });
     }
 
     try {

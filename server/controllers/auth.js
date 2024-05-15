@@ -15,7 +15,7 @@ export const signup = async(req,res) => {
         const token = jwt.sign({ email: newUser.email, id:newUser._id }, process.env.JWT_SECRET, {expiresIn: '1h'});
         return res.status(200).json({ data: newUser, token, message: 'User created successfully' });
     }catch(error){
-        return res.status(500).json({ message: 'Internal server error'});
+        return res.status(500).json({ error: 'Internal server error'});
     }
 }
 
@@ -24,16 +24,16 @@ export const login = async (req, res) => {
     try {
         const existinguser = await users.findOne({ email, deleted: 0 });
         if(!existinguser){
-            return res.status(404).json({ message: 'User not Exist' })
+            return res.status(404).json({ error: 'Invalid email or password' })
         }
 
         const isPasswordCrt = await bcrypt.compare(password, existinguser.password)
         if(!isPasswordCrt){
-            return res.status(400).json({message : "Invalid credentials"})
+            return res.status(400).json({error : 'Invalid email or password' })
         }
         const token = jwt.sign({ email: existinguser.email, id:existinguser._id}, process.env.JWT_SECRET, { expiresIn: '1h'});
         return res.status(200).json({ data: existinguser, token, message: 'User login successfully' })
     } catch (error)  {
-        return res.status(500).json({ message: 'Internal server error'})
+        return res.status(500).json({ error: 'Internal server error'})
     }
 }
