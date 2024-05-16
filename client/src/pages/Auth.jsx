@@ -20,29 +20,36 @@ const Auth = () => {
     const [cpassword, setCpassword] = useState('');
 
     useEffect(() => {
-        if(user){
-            navigate('/', {replace: true})
+        if (user) {
+            navigate('/', { replace: true })
         }
     }, [navigate, user])
+
+    useEffect(() => {
+        const currentUser = localStorage.getItem('user');
+        if (currentUser) {
+            dispatch(setUser(JSON.parse(currentUser)));
+        }
+    }, [dispatch]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignup) {
-            if (password !== cpassword){
+            if (password !== cpassword) {
                 alert('Password not match');
                 return;
             }
-            SIGNUP({firstname,lastname,email,password})
-            .then((res) => {
-                dispatch(setUser(res.user));
-                navigate('/', {replace: true})
-            })
+            SIGNUP({ firstname, lastname, email, password })
+                .then((res) => {
+                    dispatch(setUser(res.data));
+                    navigate('/', { replace: true })
+                })
         } else {
-            LOGIN({ email,password })
-            .then((res) => {
-                dispatch(setUser(res.user));
-                navigate('/' ,{replace: true});
-            })
+            LOGIN({ email, password })
+                .then((res) => {
+                    dispatch(setUser(res.data));
+                    navigate('/', { replace: true });
+                })
         }
     }
 
