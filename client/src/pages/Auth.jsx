@@ -33,14 +33,14 @@ const Auth = () => {
                 return;
             }
             SIGNUP({firstname,lastname,email,password})
-            .then((user) => {
-                dispatch(setUser(user.data));
+            .then((res) => {
+                dispatch(setUser(res.user));
                 navigate('/', {replace: true})
             })
         } else {
             LOGIN({ email,password })
-            .then((user) => {
-                dispatch(setUser(user.data));
+            .then((res) => {
+                dispatch(setUser(res.user));
                 navigate('/' ,{replace: true});
             })
         }
