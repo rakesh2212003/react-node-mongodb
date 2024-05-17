@@ -19,18 +19,12 @@ const Auth = () => {
     const [password, setPassword] = useState('');
     const [cpassword, setCpassword] = useState('');
 
-    useEffect(() => {
-        if (user) {
-            navigate('/', { replace: true })
-        }
-    }, [navigate, user])
-
-    useEffect(() => {
-        const currentUser = localStorage.getItem('user');
-        if (currentUser) {
-            dispatch(setUser(JSON.parse(currentUser)));
-        }
-    }, [dispatch]);
+    // useEffect(() => {
+    //     const currentUser = localStorage.getItem('user');
+    //     if (currentUser) {
+    //         dispatch(setUser(JSON.parse(currentUser)));
+    //     }
+    // }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
